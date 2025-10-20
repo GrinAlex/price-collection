@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 import time
 
 # varus_parser.py
-def parse_varus(driver, url, pause_time):
+def parse_varus(driver, category_url, city_name, shop_address, pause_time):
     """
     Parses the Varus website for product information.
     
@@ -14,7 +14,7 @@ def parse_varus(driver, url, pause_time):
     :param pause_time: Time to wait after scrolling
     :return: List of dictionaries containing product information
     """
-    driver.get(url)
+    driver.get(category_url)
     WebDriverWait(driver, 30).until(lambda d: d.find_element(By.CLASS_NAME, "sf-product-card__title"))
     
     data = []

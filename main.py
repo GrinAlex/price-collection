@@ -7,49 +7,29 @@ import time
 import csv
 
 # Import parsing settings
-from parsing_settings import get_nets_parsing_settings
-from parsing_settings import get_categories_by_net_name
-from parsing_settings import get_cities_by_net_name
-from parsing_settings import get_shops_by_net_in_city
+from parsing_settings import get_parsing_settings
 
 # Parsing scripts
 from parsers.varus_parser import parse_varus
 # parsers.silpo_parser import parse_silpo
 # parsers.ashan_parser import parse_ashan
 
-# Get parsing networks
-nets = get_nets_parsing_settings()
+driwer = webdriver.Firefox()
 
-# Net loop
-for net in nets:
-    net_name = net['net_name']
-    net_main_url = net['net_main_url']
-    parser = net['parser']
-    print(net_name)
-    
-    # Get product categories by nets
-    nets_categories = get_categories_by_net_name(net_name)
-    # Net category loop
-    for net_category in nets_categories:
-        category_name = net_category['category_name']
-        category_url = net_category['category_url']
-        print(" ", category_name)
-    
-    # Get cities by net name
-    net_cities = get_cities_by_net_name(net_name)
-    # Net cities loop
-    for city in net_cities:
-        net_city = city
-        print(" ", net_city)
-        
-        # Get shops by net in city
-        net_shops = get_shops_by_net_in_city(net_name, net_city)
-        # Shop loop
-        for shop in net_shops:
-            net_shop = shop
-            print("   ", net_shop)
+# Loop by parsing settings
+for parsing_setting_line in get_parsing_settings():
+    net_name = parsing_setting_line['net_name']
+    net_url = parsing_setting_line['url']
+    category_name = parsing_setting_line['category_name']
+    category_url = parsing_setting_line['category_url']
+    parser = parsing_setting_line['parser']
+    city_name = parsing_setting_line['city_name']
+    shop_address = parsing_setting_line['shop_address']
 
-            # ToDo Call parser with parameters: net_name, net_main_url, parser, category_name, category_url, net_city, net_shop
+    # Define parcer function based on parser name
+    if parser == 'varus_parser':
+        data = parse_varus(driwer, category_url, city_name, shop_address, pause_time=20)
+        print(data)
 
 
 
