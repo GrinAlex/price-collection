@@ -14,7 +14,7 @@ from parsers.varus_parser import parse_varus
 # parsers.silpo_parser import parse_silpo
 # parsers.ashan_parser import parse_ashan
 
-driwer = webdriver.Firefox()
+driver = webdriver.Firefox()
 
 # Loop by parsing settings
 for parsing_setting_line in get_parsing_settings():
@@ -28,11 +28,11 @@ for parsing_setting_line in get_parsing_settings():
 
     # Define parcer function based on parser name
     if parser == 'varus_parser':
-        data = parse_varus(driwer, category_url, city_name, shop_address, pause_time=20)
+        data = parse_varus(driver, category_url, city_name, shop_address, pause_time=20)
         print(data)
 
 
-
+driver.close()
 
 
 
