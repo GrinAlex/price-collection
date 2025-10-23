@@ -3,8 +3,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
-import csv
+
+
 
 # Import parsing settings
 from parsing_settings import get_parsing_settings
@@ -13,6 +13,10 @@ from parsing_settings import get_parsing_settings
 from parsers.varus_parser import parse_varus
 # parsers.silpo_parser import parse_silpo
 # parsers.ashan_parser import parse_ashan
+
+# Import writer to csv file
+from save_to_file import write_data_to_file 
+
 
 driver = webdriver.Firefox()
 
@@ -28,9 +32,9 @@ for parsing_setting_line in get_parsing_settings():
 
     # Define parcer function based on parser name
     if parser == 'varus_parser':
-        data = parse_varus(driver, category_url, city_name, shop_address, pause_time=20)
-        print(data)
-
+        data = parse_varus(driver, category_name, category_url, city_name, shop_address, pause_time=10)
+    
+    write_data_to_file(data)
 
 driver.close()
 
