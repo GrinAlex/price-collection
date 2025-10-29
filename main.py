@@ -11,7 +11,7 @@ from parsing_settings import get_parsing_settings
 
 # Parsing scripts
 from parsers.varus_parser import parse_varus
-# parsers.silpo_parser import parse_silpo
+from parsers.silpo_parser import parse_silpo
 # parsers.ashan_parser import parse_ashan
 
 # Import writer to csv file
@@ -33,6 +33,8 @@ for parsing_setting_line in get_parsing_settings():
     # Define parcer function based on parser name
     if parser == 'varus_parser':
         data = parse_varus(driver, category_name, category_url, city_name, shop_address, pause_time=10)
+    elif parser == 'silpo_parser':
+        data = parse_silpo(driver, category_name, category_url, city_name, shop_address, pause_time=10)   
     
     write_data_to_file(data)
 
