@@ -32,10 +32,13 @@ for parsing_setting_line in get_parsing_settings():
     shop_address = parsing_setting_line['shop_address']
 
     # Define parcer function based on parser name
-    if parser == 'varus_parser':
-        data = parse_varus(driver, category_name, category_url, city_name, shop_address, pause_time=10)
-    elif parser == 'silpo_parser':
-        data = parse_silpo(driver, category_name, category_url, city_name, shop_address, pause_time=10)   
+    try:
+        if parser == 'varus_parser':
+            data = parse_varus(driver, category_name, category_url, city_name, shop_address, pause_time=10)
+        elif parser == 'silpo_parser':
+            data = parse_silpo(driver, category_name, category_url, city_name, shop_address, pause_time=10)   
+    except:
+        continue 
     
     write_data_to_file(data)
 

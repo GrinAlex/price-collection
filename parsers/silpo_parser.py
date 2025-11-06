@@ -36,7 +36,8 @@ def parse_silpo(driver, category_name, category_url, city_name, shop_address, pa
     time.sleep(pause_time)
 
     city_choose = driver.find_element(By.ID, "city")
-    city_choose.send_keys(city_name)
+    city_choose.send_keys(city_name)   
+    time.sleep(5)
 
     city_list = driver.find_elements(By.CLASS_NAME, "search-suggestions__item-title")
     for city in city_list:
@@ -53,17 +54,18 @@ def parse_silpo(driver, category_name, category_url, city_name, shop_address, pa
             driver.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/ecomui-modal-component-host/div/sf-shop-silpo-remote-select-address-modal/shop-silpo-basket-select-address-modal/shop-silpo-basket-select-address/shop-silpo-basket-select-address-desktop/div/div[2]/div[1]/shop-silpo-basket-select-address-self-delivery/div/div[1]/div/shop-silpo-self-delivery-autocomplete[2]/shop-silpo-self-delivery-autocomplete-input/div/button').click()
         except:
             break
-    time.sleep(1)
+    time.sleep(3)
 
     # Вибір магазину (очиститка інпута)
     shop_list = driver.find_element(By.CLASS_NAME, "search-suggestions-scroll")
-    time.sleep(3)
+    time.sleep(5)
     shop_list = shop_list.find_elements(By.CLASS_NAME, "search-suggestions__item")
+    time.sleep(5)
     for shop in shop_list:
         if shop.text == shop_address:
             shop.click()
             break
-    time.sleep(3)
+    time.sleep(5)
 
     # Підтвердити адресу
     button_accept = driver.find_element(By.CLASS_NAME, 'address-search-container-content__button').click()
@@ -107,7 +109,7 @@ def parse_silpo(driver, category_name, category_url, city_name, shop_address, pa
         name = product.find_element(By.CLASS_NAME, "product-card__title").text
         quantity = product.find_element(By.CLASS_NAME, "ft-typo-14-semibold").text
         regular_price = product.find_element(By.CLASS_NAME, "product-card-price__displayPrice").text.split(" ")[0] if product.find_elements(By.CLASS_NAME, "product-card-price__displayPrice") else ''
-        old_price = product.find_element(By.CLASS_NAME, "product-card-price__displayOldPrice").text if product.find_elements(By.CLASS_NAME, "product-card-price__displayOldPrice") else ''
+        old_price = product.find_element(By.CLASS_NAME, "product-card-price__displayOldPrice").text.split(" ")[0] if product.find_elements(By.CLASS_NAME, "product-card-price__displayOldPrice") else ''
         special_price = product.find_element(By.CLASS_NAME, "product-card-price__displayPrice").text.split(" ")[0] if product.find_elements(By.CLASS_NAME, "product-card-price__displayPrice") else ''
         special_text = labels_texts
 
